@@ -13,13 +13,13 @@ public class LiquidationMapper {
     log.info(kafkaLiquidation.toString());
 
     ElasticsearchLiquidations esElasticsearchLiquidation = new ElasticsearchLiquidations();
-    esElasticsearchLiquidation.setBrand(kafkaLiquidation.getBrand());
-    esElasticsearchLiquidation.setDay(kafkaLiquidation.getDay());
-    esElasticsearchLiquidation.setEstablishmentId(Long.valueOf(kafkaLiquidation.getEstablishmentId()));
-    esElasticsearchLiquidation.setGrossTotal(new BigDecimal(kafkaLiquidation.getGrossTotal()));
-    esElasticsearchLiquidation.setNetTotal(new BigDecimal(kafkaLiquidation.getNetTotal()));
-    esElasticsearchLiquidation.setTariffsAndFinancialExpensesTotal(new BigDecimal(kafkaLiquidation.getTariffsAndFinancialExpensesTotal()));
-    esElasticsearchLiquidation.setTaxesTotal(new BigDecimal(kafkaLiquidation.getTaxesTotal()));
+    esElasticsearchLiquidation.setMarca(kafkaLiquidation.getBrand());
+    esElasticsearchLiquidation.setPeriodo(kafkaLiquidation.getDay());
+    esElasticsearchLiquidation.setNroEstablecimiento(Long.valueOf(kafkaLiquidation.getEstablishmentId()));
+    esElasticsearchLiquidation.setTotalPresentado(new BigDecimal(kafkaLiquidation.getGrossTotal()));
+    esElasticsearchLiquidation.setTotalNeto(new BigDecimal(kafkaLiquidation.getNetTotal()));
+    esElasticsearchLiquidation.setArancelesPrisma(new BigDecimal(kafkaLiquidation.getTariffsAndFinancialExpensesTotal()));
+    esElasticsearchLiquidation.setImpuestos(new BigDecimal(kafkaLiquidation.getTaxesTotal()));
     return esElasticsearchLiquidation;
   }
 }

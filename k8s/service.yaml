@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: ms-seed-phe
+  name: ms-liquidations-consumer-elastic
 spec:
   selector:
-    app: ms-seed-phe
+    app: ms-liquidations-consumer-elastic
   ports:
   - name: http
     protocol: TCP

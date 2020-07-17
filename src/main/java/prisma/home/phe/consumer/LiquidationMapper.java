@@ -1,7 +1,6 @@
 package prisma.home.phe.consumer;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 
 import lombok.extern.slf4j.Slf4j;
 import prisma.home.phe.model.elasticsearch.ElasticsearchLiquidations;
@@ -10,8 +9,7 @@ import prisma.home.phe.model.kafka.KafkaLiquidations;
 @Slf4j
 public class LiquidationMapper {
 
-  public ElasticsearchLiquidations CreateLiquidationES(KafkaLiquidations kafkaLiquidation)
-    throws ParseException {
+  public ElasticsearchLiquidations CreateLiquidationES(KafkaLiquidations kafkaLiquidation) {
     log.info(kafkaLiquidation.toString());
 
     ElasticsearchLiquidations esElasticsearchLiquidation = new ElasticsearchLiquidations();
@@ -25,7 +23,7 @@ public class LiquidationMapper {
     return esElasticsearchLiquidation;
   }
 
-  private String StringToDate(String Date) throws ParseException {
+  private String StringToDate(String Date) {
     String[] formatDate = Date.split("-");
     return (formatDate[2]+"-"+formatDate[1]+"-"+formatDate[0]);
   }

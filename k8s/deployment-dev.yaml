@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-seed-phe
+  name: ms-liquidations-consumer-elastic
 spec:
   selector:
     matchLabels:
-      app: ms-seed-phe
+      app: ms-liquidations-consumer-elastic
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-seed-phe
+        app: ms-liquidations-consumer-elastic
         version: v1
     spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - name: ms-seed-phe
-        image: registry.dev.redbee.io/phe/ms-seed-phe:v0.0.2
+      - name: ms-liquidations-consumer-elastic
+        image: registry.dev.redbee.io/phe/ms-liquidations-consumer-elastic:v0.0.1
         imagePullPolicy: Always
         env:
           - name: "SPRING_PROFILES_ACTIVE"

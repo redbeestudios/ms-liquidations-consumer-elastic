@@ -18,8 +18,8 @@ import prisma.home.phe.model.kafka.KafkaLiquidations;
 @Configuration
 public class KafkaConfiguration {
 
-  @Value("${spring.kafka.consumer.bootstrap-servers}")
-  private final String bootstrapServer="localhost:9092";
+  @Value("${spring.kafka.bootstrap-servers}")
+  private final String bootstrapServer="my-kafka.infra.svc.cluster.local:9092";
 
   @Value("${spring.kafka.consumer.group-id}")
   private final String groupId="liquidations-group";

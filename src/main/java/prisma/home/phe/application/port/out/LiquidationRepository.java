@@ -1,8 +1,9 @@
 package prisma.home.phe.application.port.out;
 
-import prisma.home.phe.adapter.elasticsearch.model.LiquidationElasticModel;
+import prisma.home.phe.application.port.in.SaveLiquidationCommand;
+import prisma.home.phe.domain.Liquidation;
 
 public interface LiquidationRepository {
 
-  void save(LiquidationElasticModel liquidationElasticModel);
+  Liquidation save(SaveLiquidationCommand.Command liquidation);
 }

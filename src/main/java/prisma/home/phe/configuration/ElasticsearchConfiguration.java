@@ -11,25 +11,15 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
-@EnableElasticsearchRepositories(basePackages = "prisma.home.phe.repository")
+@EnableElasticsearchRepositories(basePackages = "prisma.home.phe.application.port.out")
 public class ElasticsearchConfiguration {
 
-    /**
-     * Variable to link property elasticsearch host.
-     */
     @Value("${elasticsearch.host}")
     private String host;
 
-    /**
-     * Variable to link property elasticsearch port.
-     */
     @Value("${elasticsearch.port}")
     private int port;
 
-    /**
-     * Bean to define elasticsearch client configuration.
-     * @return RestClient Object.
-     */
     @Bean
     public RestHighLevelClient client() {
         ClientConfiguration clientConfiguration = ClientConfiguration.builder()
@@ -38,10 +28,6 @@ public class ElasticsearchConfiguration {
         return RestClients.create(clientConfiguration).rest();
     }
 
-    /**
-     * Bean to define elasticsearch client configuration.
-     * @return ElasticRestTemplate. Allows execute index operations.
-     */
     @Bean
     public ElasticsearchOperations elasticsearchTemplate() {
         return new ElasticsearchRestTemplate(client());

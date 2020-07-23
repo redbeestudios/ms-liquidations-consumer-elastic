@@ -13,7 +13,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import prisma.home.phe.model.kafka.KafkaLiquidations;
+import prisma.home.phe.adapter.kafka.model.LiquidationKafkaModel;
 
 @EnableKafka
 @Configuration
@@ -39,13 +39,13 @@ public class KafkaConfiguration {
   }
 
   @Bean
-  public ConsumerFactory<String, KafkaLiquidations> consumerFactory() {
+  public ConsumerFactory<String, LiquidationKafkaModel> consumerFactory() {
     return new DefaultKafkaConsumerFactory<>(consumerConfigs(),  new JsonDeserializer<>(),
-      new JsonDeserializer<>(KafkaLiquidations.class, false));
+      new JsonDeserializer<>(LiquidationKafkaModel.class, false));
   }
   @Bean
-  public ConcurrentKafkaListenerContainerFactory<String, KafkaLiquidations> kafkaListenerContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, KafkaLiquidations>
+  public ConcurrentKafkaListenerContainerFactory<String, LiquidationKafkaModel> kafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, LiquidationKafkaModel>
       factory = new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
     return factory;

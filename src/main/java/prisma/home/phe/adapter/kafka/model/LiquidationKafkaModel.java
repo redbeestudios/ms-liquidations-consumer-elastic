@@ -1,6 +1,7 @@
 package prisma.home.phe.adapter.kafka.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -23,13 +24,13 @@ public class LiquidationKafkaModel implements Serializable {
 
   private String brand;
 
-  private Double grossPay;
+  private BigDecimal grossPay;
 
-  private Double fee;
+  private BigDecimal fee;
 
-  private Double financialCost;
+  private BigDecimal financialCost;
 
-  private Double netPay;
+  private BigDecimal netPay;
 
   public Liquidation toDomain() {
 

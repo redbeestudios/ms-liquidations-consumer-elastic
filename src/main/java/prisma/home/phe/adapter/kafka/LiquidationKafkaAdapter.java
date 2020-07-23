@@ -21,7 +21,15 @@ private SaveLiquidationCommand liquidationCommand;
   @KafkaListener(topics = {"liquidations"})
   public void eventConsumer(LiquidationKafkaModel liquidation) throws IOException {
     log.info("Message {} Received from kafka-cluster", liquidation);
-    liquidationCommand.saveLiquidation(liquidation.toDomain());
+    liquidationCommand.saveLiquidation(SaveLiquidationCommand.Command.builder()
+      .brand(liquidation.getBrand())
+      .establishmentId(liquidation.getEstablishmentId())
+      .fee(liquidation.getFee())
+      .financialCost(liquidation.getFinancialCost())
+      .grossPay(liquidation.getGrossPay())
+      .paymentTimestamp(liquidation.getPaymentTimestamp())
+      .netPay(liquidation.getNetPay())
+      .build());
   }
 
 }

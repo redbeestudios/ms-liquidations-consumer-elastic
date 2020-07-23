@@ -1,6 +1,7 @@
 package prisma.home.phe.adapter.elasticsearch.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import prisma.home.phe.application.port.in.SaveLiquidationCommand;
 import prisma.home.phe.domain.Liquidation;
 
 @AllArgsConstructor
@@ -33,18 +35,18 @@ public class LiquidationElasticModel implements Serializable {
   private String brand;
 
   @Field(type=FieldType.Double)
-  private Double grossPay;
+  private BigDecimal grossPay;
 
   @Field(type=FieldType.Double)
-  private Double fee;
+  private BigDecimal fee;
 
   @Field(type=FieldType.Double)
-  private Double financialCost;
+  private BigDecimal financialCost;
 
   @Field(type=FieldType.Double)
-  private Double netPay;
+  private BigDecimal netPay;
 
-  public LiquidationElasticModel toElasticModel(Liquidation liquidation){
+  public LiquidationElasticModel DomainToElasticModel(Liquidation liquidation){
     Instant instant = liquidation.getPaymentTimestamp().toInstant();
     Long liquidationPayDate = instant.toEpochMilli();
 
@@ -57,4 +59,19 @@ public class LiquidationElasticModel implements Serializable {
       .netPay(liquidation.getNetPay())
       .build();
   }
+
+  public LiquidationElasticModel CommandToElasticModel(SaveLiquidationCommand.Command liquidation){
+    Instant instant = liquidation.getPaymentTimestamp().toInstant();
+    Long liquidationPayDate = instant.toEpochMilli();
+
+    return LiquidationElasticModel.builder()
+      .paymentTimestamp(liquidationPayDate)
+      .brand(liquidation.getBrand())
+      .grossPay(liquidation.getGrossPay())
+      .fee(liquidation.getFee())
+      .financialCost(liquidation.getFinancialCost())
+      .netPay(liquidation.getNetPay())
+      .build();
+  }
+
 }

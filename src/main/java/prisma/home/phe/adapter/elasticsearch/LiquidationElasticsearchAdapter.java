@@ -22,8 +22,16 @@ public class LiquidationElasticsearchAdapter implements LiquidationRepository {
   public Liquidation save(final SaveLiquidationCommand.Command liquidation) {
     LiquidationElasticModel liquidationElasticModel = new LiquidationElasticModel();
     liquidationElasticModelRepository.save(liquidationElasticModel.CommandToElasticModel(liquidation));
-    log.info("Liquidation Saved {}",liquidation);
-    return liquidation.getLiquidation();
+    log.info("Liquidation Saved in Elasticsearch{}", liquidation);
+    return Liquidation.builder()
+      .brand(liquidation.getBrand())
+      .establishmentId(liquidation.getEstablishmentId())
+      .fee(liquidation.getFee())
+      .financialCost(liquidation.getFinancialCost())
+      .grossPay(liquidation.getGrossPay())
+      .paymentTimestamp(liquidation.getPaymentTimestamp())
+      .netPay(liquidation.getNetPay())
+      .build();
   }
 }
 

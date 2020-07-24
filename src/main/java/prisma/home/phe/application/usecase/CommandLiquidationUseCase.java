@@ -18,7 +18,7 @@ public class CommandLiquidationUseCase implements SaveLiquidationCommand {
 
   @Override
   public Liquidation saveLiquidation(final Command liquidation) {
-    log.info("Create the liquidation {}", liquidation.getLiquidation());
-    return liquidation.getLiquidation();
+    log.info("Use Case: Save {}", CommandLiquidationUseCase.class);
+    return liquidationRepository.save(liquidation);
   }
 }

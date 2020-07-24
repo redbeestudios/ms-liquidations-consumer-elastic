@@ -1,8 +1,5 @@
 package prisma.home.phe.application.port.in;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
 import lombok.Builder;
 import lombok.Value;
 import prisma.home.phe.domain.Liquidation;
@@ -21,18 +18,6 @@ public interface SaveLiquidationCommand {
   @Value
   @Builder
   class Command {
-     String establishmentId;
-
-     Timestamp paymentTimestamp;
-
-     String brand;
-
-     BigDecimal grossPay;
-
-     BigDecimal fee;
-
-     BigDecimal financialCost;
-
-     BigDecimal netPay;
+    Liquidation liquidation;
   }
 }

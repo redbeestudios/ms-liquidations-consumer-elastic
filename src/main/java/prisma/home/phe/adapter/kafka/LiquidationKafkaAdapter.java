@@ -1,7 +1,5 @@
 package prisma.home.phe.adapter.kafka;
 
-import java.io.IOException;
-
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
@@ -19,16 +17,10 @@ private SaveLiquidationCommand liquidationCommand;
   }
 
   @KafkaListener(topics = {"liquidations"})
-  public void eventConsumer(LiquidationKafkaModel liquidation) throws IOException {
+  public void eventConsumer(LiquidationKafkaModel liquidation) {
     log.info("Message {} Received from kafka-cluster", liquidation);
     liquidationCommand.saveLiquidation(SaveLiquidationCommand.Command.builder()
-      .brand(liquidation.getBrand())
-      .establishmentId(liquidation.getEstablishmentId())
-      .fee(liquidation.getFee())
-      .financialCost(liquidation.getFinancialCost())
-      .grossPay(liquidation.getGrossPay())
-      .paymentTimestamp(liquidation.getPaymentTimestamp())
-      .netPay(liquidation.getNetPay())
+      .liquidation(liquidation.toDomain())
       .build());
   }
 

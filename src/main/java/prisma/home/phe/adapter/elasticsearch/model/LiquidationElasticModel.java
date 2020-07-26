@@ -19,7 +19,7 @@ import prisma.home.phe.domain.Liquidation;
 @NoArgsConstructor
 @Data
 @Builder
-@Document(indexName = "liquidation.demophe.2020-07", createIndex = false)
+@Document(indexName = "liquidation.demophe.2020-08", createIndex = true)
 public class LiquidationElasticModel implements Serializable {
 
   @Id

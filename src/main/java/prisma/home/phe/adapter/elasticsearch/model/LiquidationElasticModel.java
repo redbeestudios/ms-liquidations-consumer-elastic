@@ -2,7 +2,7 @@ package prisma.home.phe.adapter.elasticsearch.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.sql.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -12,24 +12,26 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import prisma.home.phe.application.port.in.SaveLiquidationCommand;
 import prisma.home.phe.domain.Liquidation;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-@Document(indexName = "liquidation.demophe.2020-08", createIndex = true)
+@Document(indexName = "daily.liquidation.2020-08", createIndex = false)
 public class LiquidationElasticModel implements Serializable {
 
   @Id
   String Id;
 
-  @Field(type= FieldType.Long)
+  @Field(type= FieldType.Text)
   private String establishmentId;
 
   @Field(type=FieldType.Date, pattern = "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis")
-  private Long paymentTimestamp;
+  private String paymentDay;
+
+  @Field(type=FieldType.Date, pattern = "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||yyyy-MM")
+  private Date date;
 
   @Field(type=FieldType.Text)
   private String brand;
@@ -44,32 +46,28 @@ public class LiquidationElasticModel implements Serializable {
   private BigDecimal financialCost;
 
   @Field(type=FieldType.Double)
+  private BigDecimal serviceCost;
+
+  @Field(type=FieldType.Double)
+  private BigDecimal taxes;
+
+  @Field(type=FieldType.Double)
   private BigDecimal netPay;
 
-  public LiquidationElasticModel DomainToElasticModel(Liquidation liquidation){
-    Instant instant = liquidation.getPaymentTimestamp().toInstant();
-    Long liquidationPayDate = instant.toEpochMilli();
+  public static LiquidationElasticModel DomainToElasticModel(Liquidation liquidation){
+
+    Date date = Date.valueOf(liquidation.getPaymentDay());
 
     return LiquidationElasticModel.builder()
-      .paymentTimestamp(liquidationPayDate)
+      .establishmentId(liquidation.getEstablishmentId())
+      .paymentDay(liquidation.getPaymentDay())
+      .date(date)
       .brand(liquidation.getBrand())
       .grossPay(liquidation.getGrossPay())
       .fee(liquidation.getFee())
       .financialCost(liquidation.getFinancialCost())
-      .netPay(liquidation.getNetPay())
-      .build();
-  }
-
-  public LiquidationElasticModel CommandToElasticModel(SaveLiquidationCommand.Command liquidation){
-    Instant instant = liquidation.getPaymentTimestamp().toInstant();
-    Long liquidationPayDate = instant.toEpochMilli();
-
-    return LiquidationElasticModel.builder()
-      .paymentTimestamp(liquidationPayDate)
-      .brand(liquidation.getBrand())
-      .grossPay(liquidation.getGrossPay())
-      .fee(liquidation.getFee())
-      .financialCost(liquidation.getFinancialCost())
+      .serviceCost(liquidation.getServiceCost())
+      .taxes(liquidation.getTaxes())
       .netPay(liquidation.getNetPay())
       .build();
   }

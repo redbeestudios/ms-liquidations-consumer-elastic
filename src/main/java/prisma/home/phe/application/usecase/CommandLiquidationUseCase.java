@@ -18,7 +18,18 @@ public class CommandLiquidationUseCase implements SaveLiquidationCommand {
 
   @Override
   public Liquidation saveLiquidation(final Command liquidation) {
-    log.info("Use Case: Save {}", CommandLiquidationUseCase.class);
-    return liquidationRepository.save(liquidation);
+    log.info("Use Case: Save Record {}", CommandLiquidationUseCase.class);
+
+    return liquidationRepository.save(Liquidation.builder()
+      .establishmentId(liquidation.getEstablishmentId())
+      .paymentDay(liquidation.getPaymentDay())
+      .brand(liquidation.getBrand())
+      .grossPay(liquidation.getGrossPay())
+      .fee(liquidation.getFee())
+      .financialCost(liquidation.getFinancialCost())
+      .serviceCost(liquidation.getServiceCost())
+      .taxes(liquidation.getTaxes())
+      .netPay(liquidation.getNetPay())
+      .build());
   }
 }

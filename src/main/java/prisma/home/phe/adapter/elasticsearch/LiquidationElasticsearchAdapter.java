@@ -3,7 +3,6 @@ package prisma.home.phe.adapter.elasticsearch;
 import org.springframework.stereotype.Repository;
 import lombok.extern.slf4j.Slf4j;
 import prisma.home.phe.adapter.elasticsearch.model.LiquidationElasticModel;
-import prisma.home.phe.application.port.in.SaveLiquidationCommand;
 import prisma.home.phe.application.port.out.LiquidationElasticModelRepository;
 import prisma.home.phe.application.port.out.LiquidationRepository;
 import prisma.home.phe.domain.Liquidation;
@@ -19,17 +18,20 @@ public class LiquidationElasticsearchAdapter implements LiquidationRepository {
   }
 
   @Override
-  public Liquidation save(final SaveLiquidationCommand.Command liquidation) {
-    LiquidationElasticModel liquidationElasticModel = new LiquidationElasticModel();
-    liquidationElasticModelRepository.save(liquidationElasticModel.CommandToElasticModel(liquidation));
+  public Liquidation save(final Liquidation liquidation) {
     log.info("Liquidation Saved in Elasticsearch{}", liquidation);
+
+    liquidationElasticModelRepository.save(LiquidationElasticModel.DomainToElasticModel(liquidation));
+
+    log.info("Liquidation Saved in Elasticsearch{}", liquidation);
+
     return Liquidation.builder()
       .brand(liquidation.getBrand())
       .establishmentId(liquidation.getEstablishmentId())
       .fee(liquidation.getFee())
       .financialCost(liquidation.getFinancialCost())
       .grossPay(liquidation.getGrossPay())
-      .paymentTimestamp(liquidation.getPaymentTimestamp())
+      .paymentDay(liquidation.getPaymentDay())
       .netPay(liquidation.getNetPay())
       .build();
   }

@@ -24,7 +24,7 @@ private SaveLiquidationCommand liquidationCommand;
     this.liquidationCommand = liquidationCommand;
   }
 
-  @KafkaListener(topics = {"daily.liquidations"})
+  @KafkaListener(topics = {"liquidations"})
   public void DailyLiquidationsConsumer(ConsumerRecord<String, Object> consumerRecord) {
 
     log.info("Daily Liquidation {} Received from kafka-cluster at {}", consumerRecord.value(),
@@ -45,7 +45,7 @@ private SaveLiquidationCommand liquidationCommand;
       .build());
   }
 
-  @KafkaListener(topics = {"monthly.liquidations"})
+  @KafkaListener(topics = {"liquidations.monthly"})
   public void MonthlyLiquidationsConsumer(ConsumerRecord<String, Object> consumerRecord) {
 
     log.info("MonthLy Liquidation {} Received from kafka-cluster at {}", consumerRecord.value(),

@@ -18,7 +18,7 @@ spec:
       - name: regcred
       containers:
       - name: ms-liquidations-consumer-elastic
-        image: registry.dev.redbee.io/phe/ms-liquidations-consumer-elastic:v0.0.6
+        image: registry.dev.redbee.io/phe/ms-liquidations-consumer-elastic:v0.0.7
         imagePullPolicy: Always
         env:
           - name: "SPRING_PROFILES_ACTIVE"

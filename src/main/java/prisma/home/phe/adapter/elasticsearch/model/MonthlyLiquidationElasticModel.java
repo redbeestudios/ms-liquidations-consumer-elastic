@@ -2,7 +2,6 @@ package prisma.home.phe.adapter.elasticsearch.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.YearMonth;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -32,7 +31,7 @@ public class MonthlyLiquidationElasticModel implements Serializable {
   private String paymentMonth;
 
   @Field(type=FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM")
-  private YearMonth date;
+  private String date;
 
   @Field(type=FieldType.Text)
   private String brand;
@@ -57,12 +56,10 @@ public class MonthlyLiquidationElasticModel implements Serializable {
 
   public static MonthlyLiquidationElasticModel DomainToMonthlyElasticModel(Liquidation liquidation){
 
-    YearMonth date = YearMonth.parse(liquidation.getPaymentDate());
-
     return MonthlyLiquidationElasticModel.builder()
       .establishmentId(liquidation.getEstablishmentId())
       .paymentMonth(liquidation.getPaymentDate())
-      .date(date)
+      .date(liquidation.getPaymentDate())
       .brand(liquidation.getBrand())
       .grossPay(liquidation.getGrossPay())
       .fee(liquidation.getFee())

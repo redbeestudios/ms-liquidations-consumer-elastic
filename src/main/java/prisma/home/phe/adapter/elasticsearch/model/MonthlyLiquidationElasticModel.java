@@ -27,10 +27,10 @@ public class MonthlyLiquidationElasticModel implements Serializable {
   @Field(type= FieldType.Text)
   private String establishmentId;
 
-  @Field(type=FieldType.Date, pattern = "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis")
+  @Field(type=FieldType.Text)
   private String paymentMonth;
 
-  @Field(type=FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM")
+  @Field(type=FieldType.Date, format = DateFormat.custom)
   private String date;
 
   @Field(type=FieldType.Text)
@@ -58,7 +58,7 @@ public class MonthlyLiquidationElasticModel implements Serializable {
 
     return MonthlyLiquidationElasticModel.builder()
       .establishmentId(liquidation.getEstablishmentId())
-      .paymentMonth(liquidation.getPaymentDate())
+      .paymentMonth(liquidation.getPaymentDate().split("-")[1])
       .date(liquidation.getPaymentDate())
       .brand(liquidation.getBrand())
       .grossPay(liquidation.getGrossPay())

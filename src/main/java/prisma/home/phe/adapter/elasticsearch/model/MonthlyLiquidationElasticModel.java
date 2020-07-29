@@ -2,7 +2,7 @@ package prisma.home.phe.adapter.elasticsearch.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.YearMonth;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -19,8 +19,8 @@ import prisma.home.phe.domain.Liquidation;
 @NoArgsConstructor
 @Data
 @Builder
-@Document(indexName = "daily.liquidation.2020-08", createIndex = false)
-public class LiquidationElasticModel implements Serializable {
+@Document(indexName = "monthly.liquidation.2020-07", createIndex = false)
+public class MonthlyLiquidationElasticModel implements Serializable {
 
   @Id
   String Id;
@@ -29,10 +29,10 @@ public class LiquidationElasticModel implements Serializable {
   private String establishmentId;
 
   @Field(type=FieldType.Date, pattern = "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis")
-  private String paymentDay;
+  private String paymentMonth;
 
-  @Field(type=FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||yyyy-MM")
-  private Date date;
+  @Field(type=FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM")
+  private YearMonth date;
 
   @Field(type=FieldType.Text)
   private String brand;
@@ -55,13 +55,13 @@ public class LiquidationElasticModel implements Serializable {
   @Field(type=FieldType.Double)
   private BigDecimal netPay;
 
-  public static LiquidationElasticModel DomainToElasticModel(Liquidation liquidation){
+  public static MonthlyLiquidationElasticModel DomainToMonthlyElasticModel(Liquidation liquidation){
 
-    Date date = Date.valueOf(liquidation.getPaymentDay());
+    YearMonth date = YearMonth.parse(liquidation.getPaymentDate().substring(0, 7));
 
-    return LiquidationElasticModel.builder()
+    return MonthlyLiquidationElasticModel.builder()
       .establishmentId(liquidation.getEstablishmentId())
-      .paymentDay(liquidation.getPaymentDay())
+      .paymentMonth(liquidation.getPaymentDate())
       .date(date)
       .brand(liquidation.getBrand())
       .grossPay(liquidation.getGrossPay())

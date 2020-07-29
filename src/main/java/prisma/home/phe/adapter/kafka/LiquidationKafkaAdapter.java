@@ -1,5 +1,7 @@
 package prisma.home.phe.adapter.kafka;
 
+import java.time.LocalDate;
+
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -23,15 +25,16 @@ private SaveLiquidationCommand liquidationCommand;
   }
 
   @KafkaListener(topics = {"daily.liquidations"})
-  public void eventConsumer(ConsumerRecord<String, Object> consumerRecord) {
+  public void DailyLiquidationsConsumer(ConsumerRecord<String, Object> consumerRecord) {
 
-    log.info("Message {} Received from kafka-cluster", consumerRecord.value());
+    log.info("Daily Liquidation {} Received from kafka-cluster at {}", consumerRecord.value(),
+      LocalDate.now());
 
     LiquidationKafkaModel liquidation = objectMapper.convertValue(consumerRecord.value(), LiquidationKafkaModel.class);
 
-    liquidationCommand.saveLiquidation(SaveLiquidationCommand.Command.builder()
+    liquidationCommand.saveDailyLiquidation(SaveLiquidationCommand.Command.builder()
       .establishmentId(liquidation.getEstablishmentId())
-      .paymentDay(liquidation.getPaymentDay())
+      .paymentDate(liquidation.getPaymentDate())
       .brand(liquidation.getBrand())
       .grossPay(liquidation.getGrossPay())
       .fee(liquidation.getFee())
@@ -42,4 +45,24 @@ private SaveLiquidationCommand liquidationCommand;
       .build());
   }
 
+  @KafkaListener(topics = {"monthly.liquidations"})
+  public void MonthlyLiquidationsConsumer(ConsumerRecord<String, Object> consumerRecord) {
+
+    log.info("MonthLy Liquidation {} Received from kafka-cluster at {}", consumerRecord.value(),
+      LocalDate.now());
+
+    LiquidationKafkaModel liquidation = objectMapper.convertValue(consumerRecord.value(), LiquidationKafkaModel.class);
+
+    liquidationCommand.saveMonthlyLiquidation(SaveLiquidationCommand.Command.builder()
+      .establishmentId(liquidation.getEstablishmentId())
+      .paymentDate(liquidation.getPaymentDate())
+      .brand(liquidation.getBrand())
+      .grossPay(liquidation.getGrossPay())
+      .fee(liquidation.getFee())
+      .financialCost(liquidation.getFinancialCost())
+      .serviceCost(liquidation.getServiceCost())
+      .taxes(liquidation.getTaxes())
+      .netPay(liquidation.getNetPay())
+      .build());
+  }
 }

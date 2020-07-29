@@ -19,7 +19,7 @@ public class LiquidationKafkaModel implements Serializable {
 
   private String establishmentId;
 
-  private String paymentDay;
+  private String paymentDate;
 
   private String brand;
 
@@ -39,7 +39,7 @@ public class LiquidationKafkaModel implements Serializable {
 
     return Liquidation.builder()
       .establishmentId(establishmentId)
-      .paymentDay(paymentDay)
+      .paymentDate(paymentDate)
       .brand(brand)
       .grossPay(grossPay)
       .fee(fee)

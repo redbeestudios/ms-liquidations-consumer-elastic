@@ -8,14 +8,16 @@ import prisma.home.phe.domain.Liquidation;
 
 public interface SaveLiquidationCommand {
 
-  Liquidation saveLiquidation(Command liquidation);
+  Liquidation saveDailyLiquidation(Command liquidation);
+
+  Liquidation saveMonthlyLiquidation(Command liquidation);
 
   @Value
   @Builder
   class Command {
      String establishmentId;
 
-     String paymentDay;
+     String paymentDate;
 
      String brand;
 

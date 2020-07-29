@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import prisma.home.phe.application.port.in.SaveLiquidationCommand;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +16,7 @@ public class Liquidation {
 
   private String establishmentId;
 
-  private String paymentDay;
+  private String paymentDate;
 
   private String brand;
 
@@ -32,4 +32,17 @@ public class Liquidation {
 
   private BigDecimal netPay;
 
+  public static Liquidation commandToLiquidation(SaveLiquidationCommand.Command command){
+    return Liquidation.builder()
+      .establishmentId(command.getEstablishmentId())
+      .paymentDate(command.getPaymentDate())
+      .brand(command.getBrand())
+      .grossPay(command.getGrossPay())
+      .fee(command.getFee())
+      .financialCost(command.getFinancialCost())
+      .serviceCost(command.getServiceCost())
+      .taxes(command.getTaxes())
+      .netPay(command.getNetPay())
+      .build();
+  }
 }

@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
-import prisma.home.phe.adapter.kafka.model.LiquidationKafkaModel;
+import prisma.home.phe.adapter.kafka.model.DailyLiquidationKafkaModel;
+import prisma.home.phe.adapter.kafka.model.MonthlyLiquidationKafkaModel;
 import prisma.home.phe.application.port.in.SaveLiquidationCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,7 +31,7 @@ private SaveLiquidationCommand liquidationCommand;
     log.info("Daily Liquidation {} Received from kafka-cluster at {}", consumerRecord.value(),
       LocalDate.now());
 
-    LiquidationKafkaModel liquidation = objectMapper.convertValue(consumerRecord.value(), LiquidationKafkaModel.class);
+    DailyLiquidationKafkaModel liquidation = objectMapper.convertValue(consumerRecord.value(), DailyLiquidationKafkaModel.class);
 
     liquidationCommand.saveDailyLiquidation(SaveLiquidationCommand.Command.builder()
       .establishmentId(liquidation.getEstablishmentId())
@@ -51,11 +52,11 @@ private SaveLiquidationCommand liquidationCommand;
     log.info("MonthLy Liquidation {} Received from kafka-cluster at {}", consumerRecord.value(),
       LocalDate.now());
 
-    LiquidationKafkaModel liquidation = objectMapper.convertValue(consumerRecord.value(), LiquidationKafkaModel.class);
+    MonthlyLiquidationKafkaModel liquidation = objectMapper.convertValue(consumerRecord.value(), MonthlyLiquidationKafkaModel.class);
 
     liquidationCommand.saveMonthlyLiquidation(SaveLiquidationCommand.Command.builder()
       .establishmentId(liquidation.getEstablishmentId())
-      .paymentDate(liquidation.getPaymentDay())
+      .paymentDate(liquidation.getPaymentMonth())
       .brand(liquidation.getBrand())
       .grossPay(liquidation.getGrossPay())
       .fee(liquidation.getFee())

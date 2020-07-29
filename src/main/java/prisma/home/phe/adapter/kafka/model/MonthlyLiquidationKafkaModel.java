@@ -15,11 +15,11 @@ import prisma.home.phe.domain.Liquidation;
 @Data
 @Builder
 @Slf4j
-public class LiquidationKafkaModel implements Serializable {
+public class MonthlyLiquidationKafkaModel implements Serializable {
 
   private String establishmentId;
 
-  private String paymentDay;
+  private String paymentMonth;
 
   private String brand;
 
@@ -39,7 +39,7 @@ public class LiquidationKafkaModel implements Serializable {
 
     return Liquidation.builder()
       .establishmentId(establishmentId)
-      .paymentDate(paymentDay)
+      .paymentDate(paymentMonth)
       .brand(brand)
       .grossPay(grossPay)
       .fee(fee)

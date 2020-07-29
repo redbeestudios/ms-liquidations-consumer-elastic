@@ -2,6 +2,9 @@ package prisma.home.phe.adapter.elasticsearch.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -31,7 +34,7 @@ public class DailyLiquidationElasticModel implements Serializable {
   private String paymentDay;
 
   @Field(type=FieldType.Date, format = DateFormat.custom, pattern = "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis")
-  private String date;
+  private Date date;
 
   @Field(type=FieldType.Text)
   private String brand;
@@ -55,12 +58,13 @@ public class DailyLiquidationElasticModel implements Serializable {
   private BigDecimal netPay;
 
   public static DailyLiquidationElasticModel DomainToDailyElasticModel(Liquidation liquidation){
-
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    Date date = Date.valueOf(LocalDate.parse(liquidation.getPaymentDate(), formatter));
 
     return DailyLiquidationElasticModel.builder()
       .establishmentId(liquidation.getEstablishmentId())
       .paymentDay(liquidation.getPaymentDate())
-      .date(liquidation.getPaymentDate())
+      .date(date)
       .brand(liquidation.getBrand())
       .grossPay(liquidation.getGrossPay())
       .fee(liquidation.getFee())

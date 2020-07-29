@@ -57,7 +57,7 @@ public class MonthlyLiquidationElasticModel implements Serializable {
 
   public static MonthlyLiquidationElasticModel DomainToMonthlyElasticModel(Liquidation liquidation){
 
-    YearMonth date = YearMonth.parse(liquidation.getPaymentDate().substring(0, 7));
+    YearMonth date = YearMonth.parse(liquidation.getPaymentDate());
 
     return MonthlyLiquidationElasticModel.builder()
       .establishmentId(liquidation.getEstablishmentId())

@@ -1,0 +1,2 @@
+#!/usr/bin/env groovy
+pipelineback('ms-liquidations-consumer-elastic', 'microservicios')

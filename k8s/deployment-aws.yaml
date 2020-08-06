@@ -18,13 +18,13 @@ spec:
       - name: regcred
       containers:
       - name: ms-liquidations-consumer-elastic
-        image: registry.dev.redbee.io/phe/ms-liquidations-consumer-elastic:v0.0.11
+        image: IMAGE_PATTERN
         imagePullPolicy: Always
         env:
           - name: "SPRING_PROFILES_ACTIVE"
-            value: "dev"
+            value: "aws"
           - name: "SPRING_CLOUD_CONFIG_URI"
-            value: "http://ms-config-phe.service-demo:8080"
+            value: "http://ms-config-phe.microservicios:8080"
         ports:
         - name: http
           containerPort: 8080

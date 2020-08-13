@@ -1,0 +1,10 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: ms-liquidations-consumer-elastic
+spec:
+  host: ms-liquidations-consumer-elastic
+  subsets:
+  - name: v1
+    labels:
+      version: v1

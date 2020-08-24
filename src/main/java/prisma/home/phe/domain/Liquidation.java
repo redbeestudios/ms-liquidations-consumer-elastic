@@ -18,7 +18,9 @@ public class Liquidation {
 
   private String paymentDate;
 
-  private String brand;
+  private String establishmentBrand;
+
+  private String establishmentCuit;
 
   private BigDecimal grossPay;
 
@@ -34,9 +36,10 @@ public class Liquidation {
 
   public static Liquidation commandToLiquidation(SaveLiquidationCommand.Command command){
     return Liquidation.builder()
+      .establishmentCuit(command.getEstablishmentCuit())
       .establishmentId(command.getEstablishmentId())
+      .establishmentBrand(command.getEstablishmentBrand())
       .paymentDate(command.getPaymentDate())
-      .brand(command.getBrand())
       .grossPay(command.getGrossPay())
       .fee(command.getFee())
       .financialCost(command.getFinancialCost())

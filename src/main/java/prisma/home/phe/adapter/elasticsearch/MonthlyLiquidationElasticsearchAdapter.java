@@ -26,7 +26,8 @@ public class MonthlyLiquidationElasticsearchAdapter implements MonthlyLiquidatio
     monthlyLiquidationElasticModelRepository.save(MonthlyLiquidationElasticModel.DomainToMonthlyElasticModel(liquidation));
 
     return Liquidation.builder()
-      .brand(liquidation.getBrand())
+      .establishmentBrand(liquidation.getEstablishmentBrand())
+      .establishmentCuit(liquidation.getEstablishmentCuit())
       .establishmentId(liquidation.getEstablishmentId())
       .fee(liquidation.getFee())
       .financialCost(liquidation.getFinancialCost())

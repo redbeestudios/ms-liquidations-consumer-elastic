@@ -19,7 +19,9 @@ public interface SaveLiquidationCommand {
 
      String paymentDate;
 
-     String brand;
+     String establishmentBrand;
+
+     String establishmentCuit;
 
      BigDecimal grossPay;
 

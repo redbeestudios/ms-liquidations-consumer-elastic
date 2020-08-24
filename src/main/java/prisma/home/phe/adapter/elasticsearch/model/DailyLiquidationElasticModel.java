@@ -21,7 +21,7 @@ import prisma.home.phe.domain.Liquidation;
 @NoArgsConstructor
 @Data
 @Builder
-@Document(indexName = "daily.liquidation.2020-07-28", createIndex = false)
+@Document(indexName = "daily.liquidation", createIndex = false)
 public class DailyLiquidationElasticModel implements Serializable {
 
   @Id
@@ -37,7 +37,10 @@ public class DailyLiquidationElasticModel implements Serializable {
   private Date date;
 
   @Field(type=FieldType.Text)
-  private String brand;
+  private String establishmentBrand;
+
+    @Field(type=FieldType.Text)
+    private String establishmentCuit;
 
   @Field(type=FieldType.Double)
   private BigDecimal grossPay;
@@ -65,7 +68,8 @@ public class DailyLiquidationElasticModel implements Serializable {
       .establishmentId(liquidation.getEstablishmentId())
       .paymentDay(liquidation.getPaymentDate())
       .date(date)
-      .brand(liquidation.getBrand())
+      .establishmentBrand(liquidation.getEstablishmentBrand())
+      .establishmentCuit(liquidation.getEstablishmentCuit())
       .grossPay(liquidation.getGrossPay())
       .fee(liquidation.getFee())
       .financialCost(liquidation.getFinancialCost())

@@ -35,8 +35,9 @@ private SaveLiquidationCommand liquidationCommand;
 
     liquidationCommand.saveDailyLiquidation(SaveLiquidationCommand.Command.builder()
       .establishmentId(liquidation.getEstablishmentId())
+      .establishmentCuit(liquidation.getEstablishmentCuit())
       .paymentDate(liquidation.getPaymentDay())
-      .brand(liquidation.getBrand())
+      .establishmentBrand(liquidation.getEstablishmentBrand())
       .grossPay(liquidation.getGrossPay())
       .fee(liquidation.getFee())
       .financialCost(liquidation.getFinancialCost())
@@ -56,8 +57,9 @@ private SaveLiquidationCommand liquidationCommand;
 
     liquidationCommand.saveMonthlyLiquidation(SaveLiquidationCommand.Command.builder()
       .establishmentId(liquidation.getEstablishmentId())
+      .establishmentCuit(liquidation.getEstablishmentCuit())
       .paymentDate(liquidation.getPaymentMonth())
-      .brand(liquidation.getBrand())
+      .establishmentBrand(liquidation.getEstablishmentBrand())
       .grossPay(liquidation.getGrossPay())
       .fee(liquidation.getFee())
       .financialCost(liquidation.getFinancialCost())

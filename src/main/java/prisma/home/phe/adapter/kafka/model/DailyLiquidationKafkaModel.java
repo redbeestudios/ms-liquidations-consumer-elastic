@@ -21,7 +21,9 @@ public class DailyLiquidationKafkaModel implements Serializable {
 
   private String paymentDay;
 
-  private String brand;
+  private String establishmentBrand;
+
+  private String establishmentCuit;
 
   private BigDecimal grossPay;
 
@@ -40,7 +42,8 @@ public class DailyLiquidationKafkaModel implements Serializable {
     return Liquidation.builder()
       .establishmentId(establishmentId)
       .paymentDate(paymentDay)
-      .brand(brand)
+      .establishmentBrand(establishmentBrand)
+      .establishmentCuit(establishmentCuit)
       .grossPay(grossPay)
       .fee(fee)
       .financialCost(financialCost)

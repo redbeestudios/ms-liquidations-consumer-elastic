@@ -13,8 +13,6 @@ spec:
         app: ms-liquidations-consumer-elastic
         version: v1
     spec:
-      imagePullSecrets:
-      - name: regcred
       containers:
       - name: ms-liquidations-consumer-elastic
         image: IMAGE_PATTERN
